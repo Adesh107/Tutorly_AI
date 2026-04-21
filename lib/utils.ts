@@ -10,6 +10,46 @@ export const getSubjectColor = (subject: string) => {
   return subjectsColors[subject as keyof typeof subjectsColors];
 };
 
+export function formUrlQuery({
+  params,
+  key,
+  value,
+}: {
+  params: string;
+  key: string;
+  value: string | null;
+}) {
+  const searchParams = new URLSearchParams(params);
+
+  if (value) {
+    searchParams.set(key, value);
+  } else {
+    searchParams.delete(key);
+  }
+
+  // Determine if there are parameters
+  const targetPath = window.location.pathname;
+  return `${targetPath}?${searchParams.toString()}`;
+}
+
+export function removeUrlQuery({
+  params,
+  keysToRemove,
+}: {
+  params: string;
+  keysToRemove: string[];
+}) {
+  const searchParams = new URLSearchParams(params);
+
+  keysToRemove.forEach((key) => {
+    searchParams.delete(key);
+  });
+
+  const targetPath = window.location.pathname;
+  return `${targetPath}?${searchParams.toString()}`;
+}
+
+
 // export const configureAssistant = (voice: string, style: string) => {
 //   const voiceId =
 //     voices[voice as keyof typeof voices][

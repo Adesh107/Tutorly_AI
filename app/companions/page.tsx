@@ -1,8 +1,31 @@
+import CompanionCard from "@/components/CompanionCard";
+import SearchInput from "@/components/SearchInput";
+import SubjectFilter from "@/components/SubjectFilter";
+import { getALLCompanions } from "@/lib/actions/companion.actions";
+import { getSubjectColor } from "@/lib/utils";
 
 
-const CompainonsLiblary = () => {
+const CompainonsLiblary = async({searchParams}:SearchParams) => {
+  const filters= await searchParams;
+  const subject = filters.subject ? filters.subject:'';
+  const topic = filters.topic?filters.topic: '';
+  const companions = await getALLCompanions({subject,topic})
+  console.log('COMPANIONS: ',companions)
   return (
-    <div>page</div>
+    <main>
+      <section>
+        <h1>Companion Library</h1>
+        <div className="flex gap-4">
+          <SearchInput/>
+          <SubjectFilter/>
+        </div>
+
+      </section>
+      <section className="companions-grid">{companions.map((companion)=>(<CompanionCard key={companion.id} 
+      {...companion}
+      color={getSubjectColor(companion.subject)}/>))} </section>
+      
+    </main>
   )
 }
 
