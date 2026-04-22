@@ -5,6 +5,9 @@ import {useEffect, useState} from "react";
 import Image from "next/image";
 import {formUrlQuery, removeKeysFromUrlQuery} from "@jsmastery/utils";
 
+
+
+
 const SearchInput = () => {
     const pathname = usePathname();
     const router = useRouter();
@@ -33,7 +36,7 @@ const SearchInput = () => {
                     router.push(newUrl, { scroll: false });
                 }
             }
-        }, 500)
+        }, 1000)
     }, [searchQuery, router, searchParams, pathname]);
 
     return (
